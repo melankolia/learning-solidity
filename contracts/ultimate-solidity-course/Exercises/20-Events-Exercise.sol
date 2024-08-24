@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.26;
 
 contract EventExample {
     // 1️⃣ Add an event called "NewUserRegistered" with 2 arguments
