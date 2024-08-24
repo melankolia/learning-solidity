@@ -63,10 +63,13 @@ contract Twitter {
     }
 
     function likeTweet(uint256 _id, address _author) external  {
+        require(tweets[_author][_id].id == _id, "Tweet does not Exist!");
+
         tweets[_author][_id].likes += 1;
     }
 
     function unlikeTweet(uint256 _id, address _author) external  {
+        require(tweets[_author][_id].id == _id, "Tweet does not Exist!");
         require(tweets[_author][_id].likes > 0, "Likes is 0 already!");
 
         tweets[_author][_id].likes -= 1;
