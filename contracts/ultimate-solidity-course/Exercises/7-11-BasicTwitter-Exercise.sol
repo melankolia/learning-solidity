@@ -9,6 +9,17 @@ pragma solidity ^0.8.0;
 // 5️⃣ Add array of tweets 
 
 contract Twitter {
+    mapping(address => string[]) public myTweets;
 
+    function createTweets(string calldata _tweet) public {
+        myTweets[msg.sender].push(_tweet);
+    }
 
+    function getAllTweets() view public returns (string[] memory) {
+        return myTweets[msg.sender];
+    }
+
+    function getTweet(uint _i) view public returns (string memory) {
+        return myTweets[msg.sender][_i];
+    }
 }
