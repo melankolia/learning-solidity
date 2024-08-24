@@ -16,12 +16,13 @@ contract Twitter {
     uint16 public MAX_TWEET_LENGTH = 280;
 
     struct Tweet {
+        uint256 id;
         address author;
         string content;
         uint256 timestamp;
         uint256 likes;
     }
-    mapping(address => Tweet[] ) public tweets;
+    mapping(address => Tweet[]) public tweets;
     address public owner;
 
     constructor() {
@@ -40,7 +41,10 @@ contract Twitter {
     function createTweet(string memory _tweet) public {
         require(bytes(_tweet).length <= MAX_TWEET_LENGTH, "Tweet is too long bro!" );
 
+        uint256 senderTweetLength = tweets[msg.sender].length;
+
         Tweet memory newTweet = Tweet({
+            id: senderTweetLength,
             author: msg.sender,
             content: _tweet,
             timestamp: block.timestamp,
@@ -56,6 +60,16 @@ contract Twitter {
 
     function getAllTweets(address _owner) public view returns (Tweet[] memory ){
         return tweets[_owner];
+    }
+
+    function likeTweet(uint256 _id, address _author) external  {
+        tweets[_author][_id].likes += 1;
+    }
+
+    function unlikeTweet(uint256 _id, address _author) external  {
+        require(tweets[_author][_id].likes > 0, "Likes is 0 already!");
+
+        tweets[_author][_id].likes -= 1;
     }
 
 }
