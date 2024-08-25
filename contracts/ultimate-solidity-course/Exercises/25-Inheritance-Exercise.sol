@@ -11,13 +11,13 @@ pragma solidity ^0.8.0;
 contract MultiplayerGame {
     mapping(address => bool) public players;
 
-    function joinGame() public virtual {
+    function joinGame() public virtual  {
         players[msg.sender] = true;
     }
 }
 
 // Game contract inheriting from MultiplayerGame
-contract Game {
+contract Game is MultiplayerGame {
     string public gameName;
     uint256 public playerCount;
 
@@ -30,7 +30,9 @@ contract Game {
         // Perform game-specific logic here
     }
 
-    function joinGame() public override {
+    function joinGame() public override  {
+       super.joinGame();
+       playerCount += 1;
        
     }
 }
